@@ -37,41 +37,23 @@ hue = 1.5
 W = 20
 np.random.seed(42)
 
-data['bv'] = bv#np.random.uniform(1, 10, size=len(data))#bv
-data['bh'] = bh#np.random.uniform(40, 80, size=len(data))#bh
-data['Av'] = Av#np.random.uniform(1, 50, size=len(data))#Av
-data['Ah'] = Ah#np.random.uniform(1, 50, size=len(data))#Ah
-data['f'] = f#np.random.uniform(2.1, 4.2, size=len(data))#f
-data['zeta'] = zeta#np.random.uniform(0.5, 2.5, size=len(data))#zeta
-data['pioverbvh'] = (4*np.pi)/(data['bv']*data['bh'])#np.random.uniform(10, 25, size=len(data))
-data['c1'] = c1#np.random.uniform(5, 50, size=len(data))#c1
-data['c2'] = c2#np.random.uniform(5, 50, size=len(data))#c2
-data['Tx_Pwr'] = Tx_Pwr#np.random.uniform(5, 50, size=len(data))#Tx_Pwr
-data['hob'] = hob#np.random.uniform(5, 50, size=len(data))#hob
-data['hue'] = hue#np.random.uniform(1.5, 22.5, size=len(data))#hue
-data['W'] = W#np.random.uniform(5, 50, size=len(data))#W
+data['bv'] = bv
+data['bh'] = bh
+data['Av'] = Av
+data['Ah'] = Ah
+data['f'] = f
+data['zeta'] = zeta
+data['pioverbvh'] = (4*np.pi)/(data['bv']*data['bh'])
+data['c1'] = c1
+data['c2'] = c2
+data['Tx_Pwr'] = Tx_Pwr
+data['hob'] = hob
+data['hue'] = hue
+data['W'] = W
 X = data[['UE_Tilt','BS_Tilt','bv','Av','UE_Azimuth','BS_Azimuth','bh','Ah','zeta','pioverbvh','Distance','f','W','hob','hue','BS_Height','c1','c2','Tx_Pwr']]
 y = data['RSRP']
 X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, random_state=42)
-#%%%
-# # XGBoost regression
-# xgboost_model = xgb.XGBRegressor(
-#     objective='reg:squarederror',  # Define the objective function
-#     n_estimators=100,  # Number of boosting rounds
-#     learning_rate=0.001,  # Learning rate
-#     max_depth=6,  # Maximum depth of a tree
-#     subsample=0.8,  # Subsample ratio of the training instance
-#     colsample_bytree=0.8,  # Subsample ratio of columns when constructing each tree
-#     random_state=42  # Seed for reproducibility
-# )
-# #%%%
-# start_time = time.time()
-# xgboost_model.fit(X_train, y_train)
-# # End the timer
-# end_time = time.time()
-# # Calculate the training time
-# training_time = end_time - start_time
-# print("Training time: {:.2f} seconds".format(training_time))
+
 # %% Load Testing Dataset
 df = pd.read_csv("C:/Users/2687492Z/Desktop/proposed_model/NN/Transfer_learning/TL-Model/dataset/subset_5000.csv")
 
@@ -89,92 +71,28 @@ hue = 1.5
 W = 20
 np.random.seed(42)
 
-df['bv'] = bv#np.random.uniform(1, 10, size=len(df))#bv
-df['bh'] = bh#np.random.uniform(40, 80, size=len(df))#bh
-df['Av'] = Av#np.random.uniform(1, 50, size=len(df))#Av
-df['Ah'] = Ah#np.random.uniform(1, 50, size=len(df))#Ah
-df['f'] = f#np.random.uniform(2.1, 4.2, size=len(df))#f
-df['zeta'] = zeta#np.random.uniform(0.5, 2.5, size=len(df))#zeta
-df['pioverbvh'] = (4*np.pi)/(df['bv']*df['bh'])#np.random.uniform(10, 25, size=len(df))#
-df['c1'] = c1#np.random.uniform(5, 50, size=len(df))#c1
-df['c2'] = c2#np.random.uniform(5, 50, size=len(df))#c2
-df['Tx_Pwr'] = Tx_Pwr#np.random.uniform(5, 50, size=len(df))#Tx_Pwr
-df['hob'] = hob#np.random.uniform(5, 50, size=len(df))
-df['hue'] = hue#np.random.uniform(1.5, 22.5, size=len(df))
-df['W'] = W#np.random.uniform(5, 50, size=len(df))
+df['bv'] = bv
+df['bh'] = bh
+df['Av'] = Av
+df['Ah'] = Ah
+df['f'] = f
+df['zeta'] = zeta
+df['pioverbvh'] = (4*np.pi)/(df['bv']*df['bh'])
+df['c1'] = c1
+df['c2'] = c2
+df['Tx_Pwr'] = Tx_Pwr
+df['hob'] = hob
+df['hue'] = hue
+df['W'] = W
 test_data_X = df[['UE_Tilt','BS_Tilt','bv','Av','UE_Azimuth','BS_Azimuth','bh','Ah','zeta','pioverbvh','Distance','f','W','hob','hue','BS_Height','c1','c2','Tx_Pwr']]
 y_test = df['RSRP']
 
-#%%%
-# start_time_pred = time.time()
-# y_pred_xgb = xgboost_model.predict(test_data_X)
-# # End the timer for prediction
-# end_time_pred = time.time()
-# # Calculate the prediction time
-# prediction_time = end_time_pred - start_time_pred
-# print("Prediction time: {:.2f} seconds".format(prediction_time))
-# #%%%
-# mse_test = mean_squared_error(y_test, y_pred_xgb)
-# rmse_test = np.sqrt(mse_test)
-# r2_test = r2_score(y_test, y_pred_xgb)
-# mae_test = mean_absolute_error(y_test, y_pred_xgb)
-# mape_test = mean_absolute_percentage_error(y_test, y_pred_xgb)
-
-# print(f"\nTest Metrics:")
-# print(f"MSE: {mse_test}")
-# print(f"RMSE: {rmse_test}")
-# print(f"R^2: {r2_test}")
-# print(f"MAE: {mae_test}")
-# print(f"MAPE: {mape_test}")
-# rmse_xgb = np.sqrt(mean_squared_error(y_test, y_pred_xgb))
-# print(f'XGBoost RMSE: {rmse_xgb}')
-# #%%%
-# # LightGBM regression
-# lightgbm_model = lgb.LGBMRegressor(
-#     objective='regression',  # Define the objective function
-#     n_estimators=100,  # Number of boosting rounds
-#     learning_rate=0.001,  # Learning rate
-#     max_depth=6,  # Maximum depth of a tree
-#     subsample=0.8,  # Subsample ratio of the training instance
-#     colsample_bytree=0.8,  # Subsample ratio of columns when constructing each tree
-#     random_state=42  # Seed for reproducibility
-# )
-# #%%%
-# start_time = time.time()
-# lightgbm_model.fit(X_train, y_train)
-# # End the timer
-# end_time = time.time()
-# # Calculate the training time
-# training_time = end_time - start_time
-# print("Training time: {:.2f} seconds".format(training_time))
-# #%%%
-# start_time_pred = time.time()
-# y_pred_lgb = lightgbm_model.predict(test_data_X)
-# # End the timer for prediction
-# end_time_pred = time.time()
-# # Calculate the prediction time
-# prediction_time = end_time_pred - start_time_pred
-# print("Prediction time: {:.2f} seconds".format(prediction_time))
-# #%%%
-# mse_test = mean_squared_error(y_test, y_pred_lgb)
-# rmse_test = np.sqrt(mse_test)
-# r2_test = r2_score(y_test, y_pred_lgb)
-# mae_test = mean_absolute_error(y_test, y_pred_lgb)
-# mape_test = mean_absolute_percentage_error(y_test, y_pred_lgb)
-
-# print(f"\nTest Metrics:")
-# print(f"MSE: {mse_test}")
-# print(f"RMSE: {rmse_test}")
-# print(f"R^2: {r2_test}")
-# print(f"MAE: {mae_test}")
-# print(f"MAPE: {mape_test}")
-# rmse_lgb = np.sqrt(mean_squared_error(y_test, y_pred_lgb))
-# print(f'LightGBM RMSE: {rmse_lgb}')
-#%%% Initialize and train the models
 # Standardize the dataset for traditional models
 scaler = MaxAbsScaler()
 X_train_scaled = scaler.fit_transform(X_train)
 X_test_scaled = scaler.transform(test_data_X)
+
+#%%% Initialize and train the models
 
 models = {
     "Gradient Boosting": GradientBoostingRegressor(),
@@ -243,6 +161,7 @@ mm_scaler = MaxAbsScaler()
 X_train_dnn_scaled = mm_scaler.fit_transform(X_train)
 X_val_dnn_scaled = mm_scaler.transform(X_val)
 X_test_dnn_scaled = mm_scaler.transform(test_data_X)
+
 # Add the DNN model
 regularizer=regularizers.l1(1.0)
 model = Sequential()
@@ -256,15 +175,6 @@ model.add(Dense(32, activation='relu', kernel_initializer='he_uniform', kernel_r
 model.add(BatchNormalization())
 model.add(Dropout(0.2))
 model.add(Dense(1, activation='linear'))
-# model.add(Dense(32, activation='relu', kernel_initializer='he_uniform', kernel_regularizer=regularizer))
-# model.add(BatchNormalization())
-# model.add(Dropout(0.2))
-# model.add(Dense(32, activation='relu', kernel_initializer='he_uniform', kernel_regularizer=regularizer))
-# model.add(BatchNormalization())
-# model.add(Dropout(0.2))
-# model.add(Dense(19, activation='relu', kernel_initializer='he_uniform', kernel_regularizer=regularizer))
-# model.add(BatchNormalization())
-# model.add(Dropout(0.2))
 
 optimizer = Adam(learning_rate=0.001)
 model.compile(optimizer=optimizer, loss='mean_squared_error')
